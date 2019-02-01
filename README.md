@@ -19,3 +19,7 @@ label.centerYConstraint(parentView: parentView)
 label.width(100)
 label.height(18)
 ```
+
+## License
+
+NSLayoutConstraint+UIView is released under the MIT license. See LICENSE for details.
