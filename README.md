@@ -16,8 +16,8 @@ parentView.addSubview(label)
 
 label.centerXConstraint(parentView: parentView)
 label.centerYConstraint(parentView: parentView)
-label.width(100)
-label.height(18)
+label.widthConstraint(constant: 100)
+label.heightConstraint(constant: 18)
 ```
 
 ## License
