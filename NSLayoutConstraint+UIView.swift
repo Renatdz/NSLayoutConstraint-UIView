@@ -1,6 +1,5 @@
 //
 //  NSLayoutConstraint+UIView.swift
-//  GitHubAPI
 //
 //  Created by renato.mendes on 10/31/18.
 //  Copyright © 2019 Renato Mendes. All rights reserved.
