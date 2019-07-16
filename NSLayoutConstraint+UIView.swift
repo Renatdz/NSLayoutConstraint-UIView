@@ -9,22 +9,26 @@ import UIKit
 
 extension NSLayoutConstraint {
     
-    public static func inset(view: UIView,
-                             inSuperview superView: UIView,
-                             withInset inset: UIEdgeInsets? = nil) -> [NSLayoutConstraint] {
-        return [.top(firstView: superView, secondView: view, constant: -Float(inset?.top ?? 0) ),
-                .left(firstView: superView, secondView: view, constant: -Float(inset?.left ?? 0)),
-                .right(firstView: superView, secondView: view, constant: Float(inset?.right ?? 0)),
-                .bottom(firstView: superView, secondView: view, constant: Float(inset?.bottom ?? 0))]
+    static func inset(view: UIView,
+                      inSuperview superView: UIView,
+                      withInset inset: UIEdgeInsets? = nil) -> [NSLayoutConstraint] {
+        return [
+            .top(firstView: superView, secondView: view, constant: -Float(inset?.top ?? 0) ),
+            .left(firstView: superView, secondView: view, constant: -Float(inset?.left ?? 0)),
+            .right(firstView: superView, secondView: view, constant: Float(inset?.right ?? 0)),
+            .bottom(firstView: superView, secondView: view, constant: Float(inset?.bottom ?? 0))
+        ]
         
     }
     
-    public static func safeAreaTop(safeAreaView: UIView, otherView: UIView, constant: Float = 0, statusBar: Bool = false)
+    static func safeAreaTop(safeAreaView: UIView, otherView: UIView, constant: Float = 0, statusBar: Bool = false)
         -> NSLayoutConstraint {
             if #available(iOS 11.0, *) {
-                return safeAreaView.safeAreaLayoutGuide.topAnchor.constraint(equalTo: otherView.topAnchor, constant: CGFloat(constant))
+                return safeAreaView.safeAreaLayoutGuide.topAnchor.constraint(equalTo: otherView.topAnchor,
+                                                                             constant: CGFloat(constant))
             } else {
                 var finalConstant = constant
+                
                 if statusBar {
                     finalConstant = -20 + constant
                 }
@@ -33,16 +37,17 @@ extension NSLayoutConstraint {
             }
     }
     
-    public static func safeAreaBottom(safeAreaView: UIView, otherView: UIView, constant: Float = 0)
+    static func safeAreaBottom(safeAreaView: UIView, otherView: UIView, constant: Float = 0)
         -> NSLayoutConstraint {
             if #available(iOS 11.0, *) {
-                return safeAreaView.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: otherView.bottomAnchor, constant: CGFloat(constant))
+                return safeAreaView.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: otherView.bottomAnchor,
+                                                                                constant: CGFloat(constant))
             } else {
                 return bottom(firstView: safeAreaView, secondView: otherView, constant:constant)
             }
     }
     
-    public static func top(firstView: UIView, secondView: UIView, constant: Float = 0)
+    static func top(firstView: UIView, secondView: UIView, constant: Float = 0)
         -> NSLayoutConstraint {
             return NSLayoutConstraint(item: firstView,
                                       attribute: NSLayoutConstraint.Attribute.top,
@@ -52,7 +57,7 @@ extension NSLayoutConstraint {
                                       multiplier: 1,
                                       constant: CGFloat(constant))
     }
-    public static func left(firstView: UIView, secondView: UIView, constant: Float = 0)
+    static func left(firstView: UIView, secondView: UIView, constant: Float = 0)
         -> NSLayoutConstraint {
             return NSLayoutConstraint(item: firstView,
                                       attribute: NSLayoutConstraint.Attribute.left,
@@ -62,7 +67,7 @@ extension NSLayoutConstraint {
                                       multiplier: 1,
                                       constant: CGFloat(constant))
     }
-    public static func right(firstView: UIView, secondView: UIView, constant: Float = 0)
+    static func right(firstView: UIView, secondView: UIView, constant: Float = 0)
         -> NSLayoutConstraint {
             return NSLayoutConstraint(item: firstView,
                                       attribute: NSLayoutConstraint.Attribute.right,
@@ -72,7 +77,7 @@ extension NSLayoutConstraint {
                                       multiplier: 1,
                                       constant: CGFloat(constant))
     }
-    public static func bottom(firstView: UIView, secondView: UIView, constant: Float = 0)
+    static func bottom(firstView: UIView, secondView: UIView, constant: Float = 0)
         -> NSLayoutConstraint {
             return NSLayoutConstraint(item: firstView,
                                       attribute: NSLayoutConstraint.Attribute.bottom,
@@ -83,7 +88,7 @@ extension NSLayoutConstraint {
                                       constant: CGFloat(constant))
     }
     
-    public static func over(topItem: UIView, bottomItem: UIView, constant: Float = 0)
+    static func over(topItem: UIView, bottomItem: UIView, constant: Float = 0)
         -> NSLayoutConstraint {
             return NSLayoutConstraint(item: topItem,
                                       attribute: NSLayoutConstraint.Attribute.bottom,
@@ -94,7 +99,7 @@ extension NSLayoutConstraint {
                                       constant: -1 * CGFloat(constant))
     }
     
-    public static func aside(left: UIView, right: UIView, constant: Float = 0)
+    static func aside(left: UIView, right: UIView, constant: Float = 0)
         -> NSLayoutConstraint {
             
             return NSLayoutConstraint(item: left,
@@ -106,7 +111,7 @@ extension NSLayoutConstraint {
                                       constant: -1 * CGFloat(constant))
     }
     
-    public static func height(view: UIView, constant: Float) -> NSLayoutConstraint {
+    static func height(view: UIView, constant: Float) -> NSLayoutConstraint {
         return NSLayoutConstraint(item: view,
                                   attribute: NSLayoutConstraint.Attribute.height,
                                   relatedBy: NSLayoutConstraint.Relation.equal,
@@ -116,7 +121,19 @@ extension NSLayoutConstraint {
                                   constant: CGFloat(constant))
     }
     
-    public static func width(view: UIView, constant: Float) -> NSLayoutConstraint {
+    static func heightEqualTo(parentView: UIView,
+                              view: UIView,
+                              constant: Float) -> NSLayoutConstraint {
+        return NSLayoutConstraint(item: view,
+                                  attribute: NSLayoutConstraint.Attribute.height,
+                                  relatedBy: NSLayoutConstraint.Relation.equal,
+                                  toItem: parentView,
+                                  attribute: NSLayoutConstraint.Attribute.height,
+                                  multiplier: 1,
+                                  constant: CGFloat(constant))
+    }
+    
+    static func width(view: UIView, constant: Float) -> NSLayoutConstraint {
         return NSLayoutConstraint(item: view,
                                   attribute: NSLayoutConstraint.Attribute.width,
                                   relatedBy: NSLayoutConstraint.Relation.equal,
@@ -126,7 +143,19 @@ extension NSLayoutConstraint {
                                   constant: CGFloat(constant))
     }
     
-    public static func aspectRadio(view: UIView, constant: Float) -> NSLayoutConstraint {
+    static func widthEqualTo(parentView: UIView,
+                             view: UIView,
+                             constant: Float) -> NSLayoutConstraint {
+        return NSLayoutConstraint(item: view,
+                                  attribute: NSLayoutConstraint.Attribute.width,
+                                  relatedBy: NSLayoutConstraint.Relation.equal,
+                                  toItem: parentView,
+                                  attribute: NSLayoutConstraint.Attribute.width,
+                                  multiplier: 1,
+                                  constant: CGFloat(constant))
+    }
+    
+    static func aspectRadio(view: UIView, constant: Float) -> NSLayoutConstraint {
         return NSLayoutConstraint(item: view,
                                   attribute: NSLayoutConstraint.Attribute.width,
                                   relatedBy: NSLayoutConstraint.Relation.equal,
@@ -136,7 +165,7 @@ extension NSLayoutConstraint {
                                   constant: 0)
     }
     
-    public static func centerY(firstView: UIView, secondView: UIView, constant: Float = 0)
+    static func centerY(firstView: UIView, secondView: UIView, constant: Float = 0)
         -> NSLayoutConstraint {
             return NSLayoutConstraint(item: firstView,
                                       attribute: NSLayoutConstraint.Attribute.centerY,
@@ -147,7 +176,7 @@ extension NSLayoutConstraint {
                                       constant: CGFloat(constant))
     }
     
-    public static func centerX(firstView: UIView, secondView: UIView, constant: Float = 0)
+    static func centerX(firstView: UIView, secondView: UIView, constant: Float = 0)
         -> NSLayoutConstraint {
             return NSLayoutConstraint(item: firstView,
                                       attribute: NSLayoutConstraint.Attribute.centerX,
@@ -161,83 +190,100 @@ extension NSLayoutConstraint {
 
 extension Array where Element == NSLayoutConstraint {
     
-    public func active() {
+    func active() {
         NSLayoutConstraint.activate(self)
     }
     
-    public func deactive() {
+    func deactive() {
         NSLayoutConstraint.deactivate(self)
     }
 }
 
 extension UIView {
     
-    public func safeAreaTop(safeAreaView: UIView, constant: Float = 0, statusBar: Bool = false) {
-        let constraint = NSLayoutConstraint.safeAreaTop(safeAreaView: safeAreaView, otherView: self, constant: constant, statusBar: statusBar)
+    func safeAreaTop(safeAreaView: UIView, constant: Float = 0, statusBar: Bool = false) {
+        let constraint = NSLayoutConstraint.safeAreaTop(safeAreaView: safeAreaView,
+                                                        otherView: self,
+                                                        constant: constant,
+                                                        statusBar: statusBar)
         constraint.isActive = true
     }
     
-    public func safeAreaBottom(safeAreaView: UIView, constant: Float = 0) {
+    func safeAreaBottom(safeAreaView: UIView, constant: Float = 0) {
         let constraint = NSLayoutConstraint.safeAreaBottom(safeAreaView: safeAreaView, otherView: self, constant: constant)
         constraint.isActive = true
     }
     
-    public func insetConstraints(inSuperview superView: UIView, withInset inset: UIEdgeInsets? = nil) {
+    func insetConstraints(inSuperview superView: UIView, withInset inset: UIEdgeInsets? = nil) {
         let constraints = NSLayoutConstraint.inset(view: self, inSuperview: superView, withInset: inset)
         constraints.active()
     }
     
-    public func topConstraint(parentView: UIView, constant: Float = 0) {
+    func topConstraint(parentView: UIView, constant: Float = 0) {
         let constraint = NSLayoutConstraint.top(firstView: self, secondView: parentView, constant: constant)
         constraint.isActive = true
     }
     
-    public func leftConstraint(parentView: UIView, constant: Float = 0) {
+    func leftConstraint(parentView: UIView, constant: Float = 0) {
         let constraint = NSLayoutConstraint.left(firstView: self, secondView: parentView, constant: constant)
         constraint.isActive = true
     }
     
-    public func rightConstraint(parentView: UIView, constant: Float = 0) {
+    func rightConstraint(parentView: UIView, constant: Float = 0) {
         let constraint = NSLayoutConstraint.right(firstView: self, secondView: parentView, constant: -constant)
         constraint.isActive = true
     }
     
-    public func bottomConstraint(parentView: UIView, constant: Float = 0) {
+    func bottomConstraint(parentView: UIView, constant: Float = 0) {
         let constraint = NSLayoutConstraint.bottom(firstView: self, secondView: parentView, constant: -constant)
         constraint.isActive = true
     }
     
-    public func overConstraint(topItem: UIView, constant: Float = 0) {
+    func overConstraint(topItem: UIView, constant: Float = 0) {
         let constraint = NSLayoutConstraint.over(topItem: topItem, bottomItem: self, constant: constant)
         constraint.isActive = true
     }
     
-    public func aside(leftItem: UIView, constant: Float = 0) {
+    func aside(leftItem: UIView, constant: Float = 0) {
         let constraint = NSLayoutConstraint.aside(left: leftItem, right: self, constant: constant)
         constraint.isActive = true
     }
     
-    public func heightConstraint(constant: Float = 0) {
+    func heightConstraint(constant: Float = 0) {
         let constraint = NSLayoutConstraint.height(view: self, constant: constant)
         constraint.isActive = true
     }
     
-    public func widthConstraint(constant: Float = 0) {
+    func heightConstraintEqualTo(parentView: UIView, constant: Float = 0) {
+        let constraint = NSLayoutConstraint.heightEqualTo(parentView: parentView,
+                                                          view: self,
+                                                          constant: constant)
+        constraint.isActive = true
+    }
+    
+    func widthConstraint(constant: Float = 0) {
         let constraint = NSLayoutConstraint.width(view: self, constant: constant)
         constraint.isActive = true
     }
     
-    public func aspectRadioConstraint(constant: Float) {
+    func widthConstraintEqualTo(parentView: UIView, constant: Float = 0) {
+        let constraint = NSLayoutConstraint.widthEqualTo(parentView: parentView,
+                                                         view: self,
+                                                         constant: constant)
+        constraint.isActive = true
+    }
+    
+    func aspectRadioConstraint(constant: Float) {
         let constraint = NSLayoutConstraint.aspectRadio(view: self, constant: constant)
         constraint.isActive = true
     }
     
-    public func centerYConstraint(parentView: UIView, constant: Float = 0) {
+    func centerYConstraint(parentView: UIView, constant: Float = 0) {
         let constraint = NSLayoutConstraint.centerY(firstView: self, secondView: parentView, constant: constant)
         constraint.isActive = true
     }
     
-    public func centerXConstraint(parentView: UIView, constant: Float = 0) {
+    func centerXConstraint(parentView: UIView, constant: Float = 0) {
         let constraint = NSLayoutConstraint.centerX(firstView: self, secondView: parentView, constant: constant)
         constraint.isActive = true
     }
