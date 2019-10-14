@@ -1,14 +1,14 @@
-# NSLayoutConstraint-UIView
+# NSLayoutConstraint+UIView
 A simple class that makes it much easier to work with constraints in swift
 
 ## Usage
 
 ```swift
-lazy var label: UILabel = {
-    let label = UILabel(frame: .zero)
-    label.translatesAutoresizingMaskIntoConstraints = false
+let label: UILabel = {
+    let label = UILabel()
     label.text = "hello world!"
-    label.textColor = .black
+    label.textColor = .blue
+    label.translatesAutoresizingMaskIntoConstraints = false
     return label
 }()
 
