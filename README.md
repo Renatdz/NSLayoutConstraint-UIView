@@ -4,7 +4,7 @@ A simple class that makes it much easier to work with constraints in swift
 ## Usage
 
 ```swift
-let label: UILabel = {
+private lazy var someLabel: UILabel = {
     let label = UILabel()
     label.text = "hello world!"
     label.textColor = .blue
@@ -12,12 +12,12 @@ let label: UILabel = {
     return label
 }()
 
-parentView.addSubview(label)
+parentView.addSubview(someLabel)
 
-label.centerXConstraint(parentView: parentView)
-label.centerYConstraint(parentView: parentView)
-label.widthConstraint(constant: 100)
-label.heightConstraint(constant: 18)
+someLabel.centerXConstraint(parentView: parentView)
+someLabel.centerYConstraint(parentView: parentView)
+someLabel.widthConstraint(constant: 100)
+someLabel.heightConstraint(constant: 18)
 ```
 
 ## License
